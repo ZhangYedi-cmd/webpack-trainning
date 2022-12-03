@@ -1,0 +1,20 @@
+0 silly argv {
+0 silly argv   _: [ 'create' ],
+0 silly argv   lernaVersion: '6.0.3',
+0 silly argv   '$0': '/opt/homebrew/bin/lerna',
+0 silly argv   name: 'workspace',
+0 silly argv   loc: 'mini-webpack'
+0 silly argv }
+1 notice cli v6.0.3
+2 verbose rootPath /Volumes/zydMacos/webpack-training
+3 warn ENOREMOTE No git remote found, skipping repository property
+4 error TypeError: Cannot read properties of undefined (reading 'trim')
+4 error     at module.exports (/Volumes/zydMacos/webpack-training/node_modules/validate-npm-package-license/index.js:60:20)
+4 error     at /Volumes/zydMacos/webpack-training/node_modules/@lerna/create/lib/lerna-module-data.js:140:19
+4 error     at PromZard.<anonymous> (/Volumes/zydMacos/webpack-training/node_modules/promzard/promzard.js:226:19)
+4 error     at onError (/Volumes/zydMacos/webpack-training/node_modules/read/lib/read.js:94:12)
+4 error     at Interface.<anonymous> (/Volumes/zydMacos/webpack-training/node_modules/read/lib/read.js:66:5)
+4 error     at Interface.emit (node:events:513:28)
+4 error     at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1125:18)
+4 error     at ReadStream.onkeypress (node:internal/readline/interface:274:20)
+4 error     at ReadStream.emit (node:events:513:28)
