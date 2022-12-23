@@ -136,6 +136,6 @@ function createBundleTemplate(entry) {
 
 // exports.createBundleTemplate = createBundleTemplate
 
-const code = createBundleTemplate("./modules/index.js")
+const code = createBundleTemplate("./modules/cjs.js")
 console.log(eval(code))
 

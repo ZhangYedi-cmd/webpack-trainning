@@ -1,8 +1,8 @@
 {
-  "name": "mini-webpack",
+  "name": "ast",
   "version": "1.0.0",
   "description": "> TODO: description",
-  "main": "index.js",
+  "main": "cjs.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

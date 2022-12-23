@@ -3,7 +3,7 @@ const webpack = require("webpack");
 
 const f1 = () => webpack({
   mode: 'none',
-  entry: './modules/index.js',
+  entry: './modules/cjs.js',
   output: {
     path: path.resolve(__dirname, "dist/"),
     filename: 'main.[contenthash:6].js'
@@ -12,7 +12,7 @@ const f1 = () => webpack({
 
 const f2 = () => webpack({
   mode: 'none',
-  entry: './modules/index.js',
+  entry: './modules/cjs.js',
   output: {
     path: path.resolve(__dirname, "dist/"),
     filename: '[name].[contenthash:6].js',

@@ -5,7 +5,7 @@ const webpack = require("webpack");
  * 打包一个JS文件
  */
 const f1 = () => webpack({
-  entry: './modules/index.js',
+  entry: './modules/cjs.js',
   mode: 'none',
   output: {
     // clear: true,
@@ -15,7 +15,7 @@ const f1 = () => webpack({
 })
 
 const f2 = () => webpack({
-  entry: './modules/index.js',
+  entry: './modules/cjs.js',
   mode: 'none',
   output: {
     iife: false,

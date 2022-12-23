@@ -11,14 +11,10 @@
       __webpack_require__.r(__webpack_exports__);
       /* harmony export */
       __webpack_require__.d(__webpack_exports__, {
-        /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+        /* harmony export */   "sum": () => (/* binding */ sum)
         /* harmony export */
       });
-// export const a = 1
-      const a = 1
-
-      /* harmony default export */
-      const __WEBPACK_DEFAULT_EXPORT__ = (a);
+      const sum = (...arg) => arg.reduce((prev, curr) => prev + curr)
 
 
       /***/
@@ -62,9 +58,6 @@
 
   /******/
   /************************************************************************/
-  /**
-   * 对上面创建好的空对象进行赋值。
-   */
   /******/ 	/* webpack/runtime/define property getters */
   /******/
   (() => {
@@ -86,9 +79,6 @@
     /******/
   })();
   /******/
-  /**
-   * 判断对象中有没有属性
-   */
   /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
   /******/
   (() => {
@@ -98,9 +88,6 @@
   })();
   /******/
   /******/ 	/* webpack/runtime/make namespace object */
-  /**
-   * 标记ESM模块
-   */
   /******/
   (() => {
     /******/ 		// define __esModule on exports
@@ -125,11 +112,12 @@
   (() => {
     __webpack_require__.r(__webpack_exports__);
     /* harmony import */
-    var _modules_sum_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-// import {a} from './modules/sum.js'
+    var _sum_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 
 
-    console.log(_modules_sum_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+    const res = (0, _sum_js__WEBPACK_IMPORTED_MODULE_0__.sum)(1, 2, 3, 5)
+
+    console.log(res)
 
   })();
 

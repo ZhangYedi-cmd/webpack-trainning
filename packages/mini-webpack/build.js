@@ -1,8 +1,8 @@
-const path = require("path")
-const webpack = require('webpack')
+const webpack = require("webpack")
+const path = require("path");
 
 const f1 = () => webpack({
-  entry: './cjs.js',
+  entry: './modules/esm/index.js',
   mode: 'none',
   output: {
     filename: 'bundle.js',

@@ -9,7 +9,7 @@
 2 verbose rootPath /Volumes/zydMacos/webpack-training
 3 warn ENOREMOTE No git remote found, skipping repository property
 4 error TypeError: Cannot read properties of undefined (reading 'trim')
-4 error     at module.exports (/Volumes/zydMacos/webpack-training/node_modules/validate-npm-package-license/index.js:60:20)
+4 error     at module.exports (/Volumes/zydMacos/webpack-training/node_modules/validate-npm-package-license/cjs.js:60:20)
 4 error     at /Volumes/zydMacos/webpack-training/node_modules/@lerna/create/lib/lerna-module-data.js:140:19
 4 error     at PromZard.<anonymous> (/Volumes/zydMacos/webpack-training/node_modules/promzard/promzard.js:226:19)
 4 error     at onError (/Volumes/zydMacos/webpack-training/node_modules/read/lib/read.js:94:12)
