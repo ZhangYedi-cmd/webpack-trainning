@@ -1,5 +1,4 @@
 const __webpack__modules__ = [
-
     (_, __webpack_exports__, __webpack_require__) => {
         const __webpack__exports__map = {}
         __webpack_require__.r(__webpack_exports__); // 标记ESM模块
@@ -9,7 +8,7 @@ const __webpack__modules__ = [
         __webpack_require__.d(__webpack_exports__, __webpack__exports__map); // 拷贝属性
     }
     ,
-    (_, __webpack_exports__ , __webpack_require__) => {
+    (_, __webpack_exports__, __webpack_require__) => {
         const __webpack__exports__map = {}
         __webpack_require__.r(__webpack_exports__); // 标记ESM模块
         const sum = (...arg) => arg.reduce((prev, curr) => prev + curr);
@@ -56,3 +55,4 @@ __webpack__require__.d = (exports, definition) => {
 (() => {
     __webpack__require__(0)
 })()
+

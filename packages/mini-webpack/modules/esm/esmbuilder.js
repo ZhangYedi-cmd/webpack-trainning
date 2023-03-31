@@ -17,7 +17,7 @@ const buildModule = (filename) => {
     sourceType: "module"
   })
   let deps = [] //依赖list
-  let moduleId = 0
+  let moduleId = 1
   let exportModuleMap = {} // filename: moduleName
   traverse(ast, {
     // 识别exports并替换掉, 将所有要导出的模块收集到一个对象中
@@ -103,29 +103,45 @@ const createBundleTemplate = (entry) => {
   const moduleTree = buildModule(entry)
   const modules = moduleTreeToQueue(moduleTree)
   return `
-     const __webpack__modules__ = [
-         ${modules.map(m => createModuleWrapper(m.code))}
-     ]
+       const __webpack__modules__ = [
+           ${modules.map(m => createModuleWrapper(m.code))}
+       ]
 
-     const __webpack__cache = {}
+      const __webpack__module__cache__ = {}
 
-     const __webpack__require__ = (moduleId) => {
-
-     }
-      __webpack_require__.r = (exports) => {
-      if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-        Object.defineProperty(exports, Symbol.toStringTag, {value: 'Module'});
+      const __webpack__require__ = (moduleId) => {
+        const cacheModule = __webpack__module__cache__[moduleId]
+        if (cacheModule !== undefined) {
+          return cacheModule.exports
+        }
+        const module = __webpack__module__cache__[moduleId] = {
+          exports: {}
+        }
+        __webpack__modules__[moduleId](module, module.exports, __webpack__require__)
+        return module.exports
       }
-      Object.defineProperty(exports, '__esModule', {value: true});
+      
+      __webpack__require__.r = (exports) => {
+        if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+          Object.defineProperty(exports, Symbol.toStringTag, {value: 'Module'});
+        }
+        Object.defineProperty(exports, '__esModule', {value: true});
       };
-
-      __webpack_require__.d = (exports, definition) => {
+      
+      __webpack__require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+      
+      __webpack__require__.d = (exports, definition) => {
         for (var key in definition) {
-          if (__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-            Object.defineProperty(exports, key, {enumerable: true, get: definition[key]});
+          if (__webpack__require__.o(definition, key) && !__webpack__require__.o(exports, key)) {
+            // Object.defineProperty(exports, key, {enumerable: true, get: definition[key]});
+            exports[key] = definition[key]
           }
         }
-    };
+      };
+      
+      (() => {
+       __webpack__require__(0)
+      })()
   `
 }
 
