@@ -110,6 +110,17 @@
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
   (() => {
     __webpack_require__.r(__webpack_exports__);
+    /**
+     * import { sum } from './sum.js'
+     *
+     * const res = sum(1,2,3)
+     *
+     * 经过webpack处理之后：
+     *
+     * var _sum_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1)
+     *
+     * const res = _sum_js__WEBPACK_IMPORTED_MODULE_0__.sum(1,2,3,4)
+     */
     /* harmony import */
     var _sum_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 

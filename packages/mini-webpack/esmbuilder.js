@@ -41,21 +41,36 @@ const buildModule = (filename) => {
     },
     // 替换 import() from ....
     ImportDeclaration(item) {
-      const {node} = item
+      const { node } = item
       const importModules = node.specifiers
       const depPath = path.resolve(__dirname, node.source.value)
+      const moduleName = `__${node.source.value}__WEBPACK_IMPORTED_MODULE`.replace('./', '').replace('.', '')
       importModules.map(module => {
-        const {name} = module.imported
+        const { name } = module.imported // 从目标模块中导出变量
         item.replaceWith(
           t.variableDeclaration(
-            'const',
+            'var',
             [
               t.variableDeclarator(
-                t.identifier(name),
+                t.identifier(moduleName),
                 t.callExpression(
                   t.identifier(`__webpack__require__`),
                   [t.numericLiteral(moduleId++)]
                 )
+              )
+            ]
+          )
+        )
+        item.insertAfter(
+          t.variableDeclaration(
+            'var',
+            [
+              t.variableDeclarator(
+                t.identifier(name),
+                t.memberExpression(
+                  t.identifier(moduleName),
+                  t.identifier(name),
+                ),
               )
             ]
           )
@@ -87,61 +102,62 @@ const moduleTreeToQueue = (moduleTree) => {
 const createModuleWrapper = (module) => {
   return `
  (_,__webpack_exports__, __webpack_require__) => {
-    const __webpack__exports__map = {}
+    const __webpack__exports__map__ = {}
     __webpack_require__.r(__webpack_exports__); // 标记ESM模块
       ${module}
-    __webpack_require__.d(__webpack_exports__, __webpack__exports__map); // 拷贝属性
+    __webpack_require__.d(__webpack_exports__, __webpack__exports__map__); // 拷贝属性
  }
   `
 }
 
 /**
- * create esm file template
+ * create esm-build-test file template
  * @param entry 入口文件路径
  */
 const createBundleTemplate = (entry) => {
   const moduleTree = buildModule(entry)
   const modules = moduleTreeToQueue(moduleTree)
   return `
-       const __webpack__modules__ = [
-           ${modules.map(m => createModuleWrapper(m.code))}
-       ]
+     const __webpack__modules__ = [
+         ${modules.map(m => createModuleWrapper(m.code))}
+     ]
 
-      const __webpack__module__cache__ = {}
+    const __webpack__cache__ = {}
 
-      const __webpack__require__ = (moduleId) => {
-        const cacheModule = __webpack__module__cache__[moduleId]
-        if (cacheModule !== undefined) {
-          return cacheModule.exports
-        }
-        const module = __webpack__module__cache__[moduleId] = {
-          exports: {}
-        }
-        __webpack__modules__[moduleId](module, module.exports, __webpack__require__)
+    const __webpack__require__ = (moduleId) => {
+      let module = __webpack__cache__[moduleId]
+      if (module) {
         return module.exports
       }
-      
-      __webpack__require__.r = (exports) => {
-        if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-          Object.defineProperty(exports, Symbol.toStringTag, {value: 'Module'});
+      module = {
+        exports : {}
+      }
+      __webpack__modules__[moduleId](module, module.exports, __webpack__require__)
+      return module.exports
+    }
+
+    __webpack__require__.r = (exports) => {
+      if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+        Object.defineProperty(exports, Symbol.toStringTag, {value: 'Module'});
+      }
+      Object.defineProperty(exports, '__esModule', {value: true});
+    };
+
+    __webpack__require__.o = (obj,property) => {
+      return Object.hasOwnProperty.call(obj,property)
+    }
+
+    __webpack__require__.d = (exports, definition) => {
+      for (var key in definition) {
+        if (__webpack__require__.o(definition, key) && !__webpack__require__.o(exports, key)) {
+           exports[key] = definition[key]
         }
-        Object.defineProperty(exports, '__esModule', {value: true});
-      };
-      
-      __webpack__require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-      
-      __webpack__require__.d = (exports, definition) => {
-        for (var key in definition) {
-          if (__webpack__require__.o(definition, key) && !__webpack__require__.o(exports, key)) {
-            // Object.defineProperty(exports, key, {enumerable: true, get: definition[key]});
-            exports[key] = definition[key]
-          }
-        }
-      };
-      
-      (() => {
-       __webpack__require__(0)
-      })()
+      }
+    };
+
+    (() => {
+     __webpack__require__(0)
+    })()
   `
 }
 
@@ -158,7 +174,7 @@ console.log(code)
  *
  */
 
-// esm
+// esm-build-test
 /**
  * export const sum = (...args) => args.reduce((prev, curr) => prev + curr)
  *  ^
